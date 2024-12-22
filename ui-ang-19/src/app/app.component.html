@@ -1,0 +1,27 @@
+<main class="main">
+  <div class="content">
+
+    <p-tabs value=0 class="w-full bg-yellow-900">
+      <p-tablist>
+          @for (tab of tabs; track tab.value) {
+              <p-tab [value]="tab.value">{{ tab.title }}</p-tab>
+          }
+      </p-tablist>
+
+        <p-tabpanels>
+          @for (tab of tabs; track tab.value) {
+            <p-tabpanel [value]="tab.value">
+              @if (tab.component) {
+                <ng-container *ngComponentOutlet="tab.component"></ng-container>
+              }
+            </p-tabpanel>
+          }
+      </p-tabpanels>
+    </p-tabs>
+
+    <!-- <div class="divider h-10rem" role="separator" aria-label="Divider"></div> -->
+
+  </div>
+</main>
+
+<router-outlet />
