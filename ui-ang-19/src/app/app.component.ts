@@ -18,9 +18,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.tabs = [
-      { title: 'Tab 1', value: '0', component: TodoComponent },
+      { title: 'Todo', value: '0', component: TodoComponent },
       { title: 'Tab 2', value: '1', component: NumberComponent },
-      { title: 'Tab 3', value: '2', component: BigNumberComponent },
+      { title: 'Open AI', value: '2', component: BigNumberComponent },
     ];
   }
 }

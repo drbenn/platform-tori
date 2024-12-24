@@ -18,16 +18,12 @@
 
   <!-- listing section -->
   <section class="flex flex-row flex-wrap justify-content-around align-items-center">
-    @for (item of items; track item.date) {
+    @for (item of todos; track item.id) {
       <div class="m-4 p-4 surface-100 border-1 border-round w-16rem h-10rem overflow-y-scroll">
-        <div class="text-sm font-light">
-          {{ item.date | date : 'mm dd yyyy'}}
-        </div>
         <div class="mt-2">
-          {{ item.text}}
+          {{ item.title}}
         </div>
       </div>
-
     }
   </section>
 </main>

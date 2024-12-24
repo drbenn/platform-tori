@@ -7,7 +7,7 @@ import { Todo } from '../types/todo.types';
   providedIn: 'root'
 })
 export class TodoService {
-  private readonly baseUrl = 'http://localhost:3000/todos'; // Update this to match your API URL
+  private readonly baseUrl = 'http://localhost:3000/todo'; // Update this to match your API URL
 
   constructor(private http: HttpClient) {}
 
@@ -24,6 +24,10 @@ export class TodoService {
 
   // Create a new todo
   createTodo(todo: Partial<Todo>): Observable<Todo> {
+    console.log('create todo');
+    console.log(todo);
+    
+    
     return this.http.post<Todo>(this.baseUrl, todo);
   }
 

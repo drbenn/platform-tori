@@ -13,5 +13,5 @@ mysql -u root -p$ROOT_PASSWD -e "
 CREATE TABLE IF NOT EXISTS todo_data (
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(120),
-  isComplete TINYINT(1) DEFAULT 0
+  isCompleted TINYINT(1) DEFAULT 0
 );"

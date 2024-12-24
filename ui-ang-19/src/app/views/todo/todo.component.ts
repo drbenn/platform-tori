@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { Todo } from './types/todo.types';
 import { TodoService } from './service/todo.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-todo',
@@ -22,7 +23,11 @@ export class TodoComponent implements OnInit {
   protected todoText: string = '';
 
   ngOnInit(): void {
-    
+    this.todoService.getTodos().subscribe((todos: Todo[]) => {
+      this.todos = todos;
+      console.log(todos);
+      
+    })
   }
 
   protected addLorem20(): void {
@@ -30,32 +35,17 @@ export class TodoComponent implements OnInit {
   }
 
   protected submitTodo(): void {
-
+    const newTodo: Partial<Todo> = { title: this.todoText, isCompleted: false};
+    this.todoService.createTodo(newTodo).subscribe({
+      next: (r: Todo) => {
+        this.todos.push(r);
+      },
+      error: (err: any) => {
+        console.error(err);
+      }
+    });
+    this.todoText = '';
   }
-
-
-  protected items: {date: Date, text: string }[] = [
-    {
-      date: new Date(),
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui rem eligendi corrupti delectus quis voluptatibus inventore quam distinctio labore quae?'
-    },
-    {
-      date: new Date(),
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui rem eligendi corrupti delectus quis voluptatibus inventore quam distinctio labore quae?'
-    },
-    {
-      date: new Date(),
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui rem eligendi corrupti delectus quis voluptatibus inventore quam distinctio labore quae?'
-    },
-    {
-      date: new Date(),
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui rem eligendi corrupti delectus quis voluptatibus inventore quam distinctio labore quae?'
-    },
-    {
-      date: new Date(),
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui rem eligendi corrupti delectus quis voluptatibus inventore quam distinctio labore quae?'
-    }
-  ];
 
   loadTodos(): void {
     this.todoService.getTodos().subscribe((data) => {
