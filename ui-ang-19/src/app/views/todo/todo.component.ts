@@ -16,7 +16,8 @@ import { Observable } from 'rxjs';
 })
 export class TodoComponent implements OnInit {
   todos: Todo[] = [];
-  newTodoTitle = '';
+  isUpdateMode: boolean = false;
+  storedUpdatedTodo: Todo | undefined;
   
   constructor(private todoService: TodoService) {}
 
@@ -54,16 +55,16 @@ export class TodoComponent implements OnInit {
   }
 
   addTodo(): void {
-    if (!this.newTodoTitle.trim()) return;
+    if (!this.todoText.trim()) return;
 
     const newTodo: Partial<Todo> = {
-      title: this.newTodoTitle,
+      title: this.todoText,
       isCompleted: false,
     };
 
     this.todoService.createTodo(newTodo).subscribe((todo) => {
       this.todos.push(todo);
-      this.newTodoTitle = '';
+      this.todoText = '';
     });
   }
 
@@ -78,5 +79,25 @@ export class TodoComponent implements OnInit {
     this.todoService.deleteTodo(id).subscribe(() => {
       this.todos = this.todos.filter((todo) => todo.id !== id);
     });
+  };
+
+
+  switchToUpdateMode(todo: Todo) {
+    this.isUpdateMode = true;
+    this.storedUpdatedTodo = todo;
+    this.todoText = todo.title;
+  }
+
+  updateTodo(): void {
+    if (this.storedUpdatedTodo && this.storedUpdatedTodo.id) {
+      this.storedUpdatedTodo.title = this.todoText;
+      this.todoService.updateTodo(this.storedUpdatedTodo.id, this.storedUpdatedTodo).subscribe((updatedTodo: Todo) => {
+        const updateIndex: number = this.todos.findIndex((existingTodo: Todo) => existingTodo.id === updatedTodo.id);
+        this.todos[updateIndex] = updatedTodo;
+      });
+      this.isUpdateMode = false;
+      this.storedUpdatedTodo = undefined;
+      this.todoText = '';
+    }
   }
 }
