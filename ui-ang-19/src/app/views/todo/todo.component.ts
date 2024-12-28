@@ -15,13 +15,12 @@ import { Observable } from 'rxjs';
   styleUrl: './todo.component.scss'
 })
 export class TodoComponent implements OnInit {
-  todos: Todo[] = [];
-  isUpdateMode: boolean = false;
-  storedUpdatedTodo: Todo | undefined;
+  protected todos: Todo[] = [];
+  protected isUpdateMode: boolean = false;
+  protected storedUpdatedTodo: Todo | undefined;
+  protected todoText: string = '';
   
   constructor(private todoService: TodoService) {}
-
-  protected todoText: string = '';
 
   ngOnInit(): void {
     this.todoService.getTodos().subscribe((todos: Todo[]) => {
@@ -61,6 +60,8 @@ export class TodoComponent implements OnInit {
       title: this.todoText,
       isCompleted: false,
     };
+    console.log(newTodo);
+    
 
     this.todoService.createTodo(newTodo).subscribe((todo) => {
       this.todos.push(todo);
