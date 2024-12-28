@@ -1,0 +1,12 @@
+{
+  "name": "platform-tori",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ui:start": "cd ui-ang-19 npm run start"
+  },
+  "author": "",
+  "license": "ISC"
+}
