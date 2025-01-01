@@ -11,7 +11,7 @@ import { Todo } from './todo/todo.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql', // Database type
-      host: 'localhost', // Database host
+      host: 'host.docker.internal',    // 'localhost', // Database host - cannot use localhost with docker
       port: 3306, // MySQL port
       username: 'root', // Your MySQL username
       password: 'pass', // Your MySQL password
